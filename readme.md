@@ -1,3 +1,5 @@
+### Build under cuda11.3, higher version may build failed.
+### Build in x64 Native command prompt
 # torch-ngp
 
 This repository contains:
