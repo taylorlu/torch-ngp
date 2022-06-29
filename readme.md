@@ -1,3 +1,23 @@
+### Build under cuda11.3, higher version may build failed.
+### Build in x64 Native command prompt
+```
+cd raymarching
+python setup.py build_ext --inplace
+pip install .
+
+cd gridencoder
+python setup.py build_ext --inplace
+pip install .
+
+cd shencoder
+python setup.py build_ext --inplace
+pip install .
+
+cd ffmlp
+python setup.py build_ext --inplace
+pip install .
+```
+
 # torch-ngp
 
 This repository contains:
