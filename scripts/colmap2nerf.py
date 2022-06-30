@@ -27,7 +27,7 @@ def parse_args():
     parser.add_argument("--images", default="", help="input path to the images folder, ignored if --video is provided")
     parser.add_argument("--run_colmap", action="store_true", help="run colmap first on the image folder")
 
-    parser.add_argument("--video_fps", default=3)
+    parser.add_argument("--video_fps", default=12)
     parser.add_argument("--time_slice", default="", help="time (in seconds) in the format t1,t2 within which the images should be generated from the video. eg: \"--time_slice '10,300'\" will generate images only from 10th second to 300th second of the video")
 
     parser.add_argument("--colmap_matcher", default="exhaustive", choices=["exhaustive","sequential","spatial","transitive","vocab_tree"], help="select which matcher colmap should use. sequential for videos, exhaustive for adhoc images")
@@ -62,7 +62,7 @@ def run_ffmpeg(args):
     except:
         pass
 
-    do_system(f"mkdir {images}")
+    os.makedirs(images)
 
     time_slice_value = ""
     time_slice = args.time_slice
@@ -91,14 +91,16 @@ def run_colmap(args):
         shutil.rmtree(sparse)
     except:
         pass
-    do_system(f"mkdir {sparse}")
+
+    os.makedirs(sparse)
     do_system(f"colmap mapper --database_path {db} --image_path {images} --output_path {sparse}")
     do_system(f"colmap bundle_adjuster --input_path {sparse}/0 --output_path {sparse}/0 --BundleAdjustment.refine_principal_point 1")
     try:
         shutil.rmtree(text)
     except:
         pass
-    do_system(f"mkdir {text}")
+
+    os.makedirs(text)
     do_system(f"colmap model_converter --input_path {sparse}/0 --output_path {text} --output_type TXT")
 
 def variance_of_laplacian(image):
