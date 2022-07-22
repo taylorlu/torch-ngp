@@ -17,6 +17,17 @@ cd ffmlp
 python setup.py build_ext --inplace
 pip install .
 ```
+disable half precision in tcnn, change `include/tiny-cuda-nn/common.h`
+```
+#define TCNN_HALF_PRECISION (!(TCNN_MIN_GPU_ARCH == 61 || TCNN_MIN_GPU_ARCH <= 52))
+#define TCNN_HALF_PRECISION 0
+```
+linux ->use c++14
+
+    json failed -> experimental/filesystem in c++14
+    other failed -> modify all files contain c++17 to c++14, especially the compiled tmp file.
+
+windows ->use c++17
 
 # torch-ngp
 
